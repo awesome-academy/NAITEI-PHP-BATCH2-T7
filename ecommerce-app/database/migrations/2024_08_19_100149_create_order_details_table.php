@@ -1,12 +1,11 @@
 <?php
 
-use App\Models\OrderStatus;
 use App\Models\Address;
+use App\Models\OrderStatus;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
-use App\Models\User;
 
 return new class() extends Migration{
     /**
@@ -15,7 +14,7 @@ return new class() extends Migration{
     public function up(): void
     {
         Schema::create('order_details', function (Blueprint $table) {
-            $table->uuid('id')->primary()->default(Str::uuid());
+            $table->uuid('id')->primary()->default(DB::raw('(UUID())'));
             $table->foreignIdFor(User::class);
             $table->timestamp('order_date');
             $table->foreignIdFor(Address::class);
