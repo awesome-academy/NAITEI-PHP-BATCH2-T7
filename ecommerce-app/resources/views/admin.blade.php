@@ -24,6 +24,7 @@
                 <a href="{{ route('users.create') }}">
                     <button class="mb-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-700">Create User</button>
                 </a>
+
                 <table class="min-w-full bg-white">
                     <thead class="bg-gray-800 text-white">
                         <tr>
