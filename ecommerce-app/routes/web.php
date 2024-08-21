@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // Simulated product data
@@ -71,6 +72,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/admin', function () {
+        // Dummy data for the admin view
+        $users = User::all();
+
+        $categories = [
+            1 => ['id' => 1, 'name' => 'Electronics'],
+            2 => ['id' => 2, 'name' => 'Furniture'],
+        ];
+
+        $products = [
+            ['id' => 1, 'name' => 'Laptop', 'price' => '$1200', 'category_id' => 1],
+            ['id' => 2, 'name' => 'Chair', 'price' => '$100', 'category_id' => 2],
+            ['id' => 3, 'name' => 'Smartphone', 'price' => '$800', 'category_id' => 1],
+        ];
+
+        return view('admin', ['users' => $users, 'categories' => $categories, 'products' => $products]);
+    })->name('admin.dashboard');
 });
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
