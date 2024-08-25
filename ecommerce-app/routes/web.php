@@ -1,33 +1,32 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Middleware\CheckOwner;
-
-use App\Models\User;
-use App\Models\Product;
-use App\Models\ProductCategory;
-
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
-
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\UserReviewController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
-
+use App\Http\Controllers\ProductController;
 // Rest of the code...
 
 // Simulated feedback data
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserReviewController;
+use App\Http\Middleware\CheckOwner;
+use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\User;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+Route::get(
+    '/orders/confirmation/{order_id}',
+    [OrderController::class, 'showConfirmation']
+)->name('orders.confirmation');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 // Profile management routes
@@ -38,7 +37,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/order-details', [OrderDetailController::class, 'index'])->name('order-details.index');
     Route::get('/order-details/{orderDetail}', [OrderDetailController::class, 'show'])->name('order-details.show');
-    
+
     Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
     Route::post('/cart/add', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/removeItem', [CartController::class, 'removeItem'])->name('cart.removeItem');
@@ -94,10 +93,4 @@ Route::get('/products', [CategoryController::class, 'index'])->name('products.in
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/language/{lang}', [LanguageController::class, 'changeLanguage'])->name('locale');
 
-
 require __DIR__.'/auth.php';
-
-
-
-
-
