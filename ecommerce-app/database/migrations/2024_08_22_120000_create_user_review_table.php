@@ -1,23 +1,19 @@
 <?php
 
-use App\Models\OrderItem;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
-use App\Models\Product;
-use App\Models\User;
 
-return new class() extends Migration {
+return new class() extends Migration{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('user_review', function (Blueprint $table) {
-            $table->uuid('id')->primary()->default(Str::uuid());
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(OrderItem::class);
+        Schema::create('user_reviews', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->foreignUuid('user_id')->references('id')->on('users');
+            $table->foreignUuid('order_item_id')->references('id')->on('order_items');
             $table->integer('rating');
             $table->text('comment')->nullable();
             $table->timestamps();
@@ -29,6 +25,6 @@ return new class() extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_review');
+        Schema::dropIfExists('user_reviews');
     }
 };
