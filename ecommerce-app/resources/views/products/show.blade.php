@@ -113,7 +113,9 @@
     @auth
         <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             <h2 class="text-2xl font-bold text-gray-800">Leave Your Feedback</h2>
+
             <form action="/" method="POST">
+
                 @csrf
                 @method('POST')
                 <div class="mt-4">

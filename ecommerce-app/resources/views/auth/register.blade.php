@@ -65,6 +65,7 @@
         </div>
 
         <!-- Upload Photo -->
+
         <!-- <div class="mt-4">
             <x-input-label for="photo" :value="__('Avatar')" />
             <input class="mt-4 form-control-file" type="file" name="photo" id="photo" class="form-control-file"

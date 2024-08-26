@@ -49,6 +49,7 @@
                         <option value="high-low" {{ request('sort-price') == 'high-low' ? 'selected' : '' }}>Highest to
                             Lowest</option>
                     </select>
+
                 </div>
 
                 <!-- Sort by Rating -->
@@ -63,6 +64,7 @@
                             Lowest</option>
                     </select>
                 </div>
+
 
                 <!-- Filter by Category (Hardcoded) -->
                 <div>
@@ -87,6 +89,7 @@
             </div>
         </form>
     </div>
+
 <!-- Recently Viewed Products Section -->
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <h2 class="text-2xl font-semibold text-gray-800">Recently Viewed Products</h2>
@@ -109,6 +112,7 @@
         @endif
     </div>
 </div>
+
 
     <!-- Main Content -->
     <div class="flex-grow">
