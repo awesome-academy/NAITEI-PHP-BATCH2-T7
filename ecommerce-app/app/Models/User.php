@@ -57,10 +57,10 @@ class User extends Authenticatable
         return $this->hasMany(UserAddress::class);
     }
 
-    public function userPayments(): HasMany
-    {
-        return $this->hasMany(UserPayment::class);
-    }
+    // public function userPayments(): HasMany
+    // {
+    //     return $this->hasMany(UserPayment::class);
+    // }
 
     public function userReview(): HasMany
     {

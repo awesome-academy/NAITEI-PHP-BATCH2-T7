@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Http\Requests\ProductRequest;
 use App\Models\ProductCategory;
 use App\Models\UserReview;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ViewedProduct;
 
 class ProductController extends Controller
 {
@@ -18,10 +20,25 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+        if (Auth::check()) {
+            $userId = Auth::id();
+            $alreadyViewed = ViewedProduct::where('user_id', $userId)
+                ->where('product_id', $product->id)
+                ->where('viewed_at', '>=', now()->subDay()) // Avoid duplicating views within 24 hours
+                ->exists();
+
+            if (!$alreadyViewed) {
+                ViewedProduct::create([
+                    'user_id' => $userId,
+                    'product_id' => $product->id,
+                    'viewed_at' => now(),
+                ]);
+            }}
         $userReviews = UserReview::all();
         return view('products.show', [
             'product' => $product,
             'userReviews' => $userReviews,
+            
         ]);
     }
 
