@@ -87,6 +87,28 @@
             </div>
         </form>
     </div>
+<!-- Recently Viewed Products Section -->
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-semibold text-gray-800">Recently Viewed Products</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+        @if($recentlyViewedProducts->isEmpty())
+            <p class="text-gray-500">You have not viewed any products recently.</p>
+        @else
+            @foreach ($recentlyViewedProducts as $viewedProduct)
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <a href="{{ route('products.show', ['product' => $viewedProduct->product->id]) }}">
+                        <img src="{{ $viewedProduct->product->image_url }}" alt="{{ $viewedProduct->product->name }}" class="w-full h-48 object-cover rounded">
+                    </a>
+                    <h3 class="mt-4 text-lg font-semibold">
+                        <a href="{{ route('products.show', ['product' => $viewedProduct->product->id]) }}">{{ $viewedProduct->product->name }}</a>
+                    </h3>
+                    <p class="text-gray-500">{{ $viewedProduct->product->description }}</p>
+                    <p class="text-gray-800 font-bold mt-2">${{ number_format($viewedProduct->product->price, 2) }}</p>
+                </div>
+            @endforeach
+        @endif
+    </div>
+</div>
 
     <!-- Main Content -->
     <div class="flex-grow">
