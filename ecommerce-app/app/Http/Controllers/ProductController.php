@@ -7,14 +7,16 @@ use App\Models\Product;
 use App\Http\Requests\ProductRequest;
 use App\Models\ProductCategory;
 use App\Models\UserReview;
+use App\Models\ViewedProduct;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function index()
-    {
-        $products = Product::all();
-        return view('admin.products.index', compact('products'));
-    }
+    // public function index()
+    // {
+    //     $products = Product::all();
+    //     return view('admin.products.index', compact('products'));
+    // }
 
     public function show(Product $product)
     {
@@ -47,7 +49,7 @@ class ProductController extends Controller
         }
 
         $product->save();
-        return redirect()->route('products.index')
+        return redirect()->route('/admin')
             ->with('success', 'Product created successfully.');
     }
 
@@ -66,14 +68,14 @@ class ProductController extends Controller
         }
 
         $product->save();
-        return redirect()->route('products.index')
+        return redirect()->route('/admin')
             ->with('success', 'Product updated successfully.');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index')
+        return redirect()->route('/admin')
             ->with('success', 'Product deleted successfully.');
     }
 }

@@ -25,6 +25,11 @@ class ProductCategory extends Model
         'deleted_at',
     ];
 
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public static function booted(): void
     {
         static::creating(function (ProductCategory $productCategory) {
@@ -34,6 +39,6 @@ class ProductCategory extends Model
 
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class,'product_category_id');
     }
 }

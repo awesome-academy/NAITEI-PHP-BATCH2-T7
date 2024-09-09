@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckOwner;
 
 use App\Models\User;
-use App\Http\Controllers\OrderDetailController;
 use App\Models\Product;
 use App\Models\ProductCategory;
 
@@ -18,7 +17,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UserReviewController;
+use App\Http\Controllers\OrderDetailController;
 
 // Rest of the code...
 
@@ -37,6 +38,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/order-details', [OrderDetailController::class, 'index'])->name('order-details.index');
     Route::get('/order-details/{orderDetail}', [OrderDetailController::class, 'show'])->name('order-details.show');
+    
+    Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
+    Route::post('/cart/add', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/removeItem', [CartController::class, 'removeItem'])->name('cart.removeItem');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -68,11 +73,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
-    Route::get('/products/create', [CategoryController::class, 'create'])->name('products.create');
-    Route::post('/products', [CategoryController::class, 'store'])->name('products.store');
-    Route::get('/products/{product}/edit', [CategoryController::class, 'edit'])->name('products.edit');
-    Route::put('/products/{product}', [CategoryController::class, 'update'])->name('products.update');
-    Route::delete('/products/{product}', [CategoryController::class, 'destroy'])->name('products.destroy');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -85,9 +90,10 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
 Route::get('/products', [CategoryController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/language/{lang}', [LanguageController::class, 'changeLanguage'])->name('locale');
+
 
 require __DIR__.'/auth.php';
 
